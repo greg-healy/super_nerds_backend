@@ -5,6 +5,6 @@ Create the virtual environment and install dependencies by running `pipenv insta
 
 If you install any additional dependencies, be sure to push your update Pipfile as well. 
 
-To run the app, enter the virtual environment with `pipenv shell`.
+To run the app, enter the virtual environment with `pipenv shell`. To leave the shell type `exit`.
 
 Type `flask run`. It should begin running on localhost:5000. 
