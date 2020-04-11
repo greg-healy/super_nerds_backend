@@ -1,11 +1,15 @@
 import time
-from flask import Flask, request, jsonify
+from flask import Blueprint, Flask, request, jsonify
 from flask_cors import CORS
+from flask_api.extensions import db
+from flask_api.models import Users, Banks, Transactions
 
-app = Flask(__name__)
-CORS(app)
+# Blueprints need to be added to the file that constructs
+# the application (ie __init__.py) to be used by the app
+main = Blueprint('main', __name__)
+CORS(main)
 
-@app.route('/getmsg/', methods=['GET'])
+@main.route('/getmsg/', methods=['GET'])
 def respond():
     # Retrieve the name from url parameter
     name = request.args.get("name", None)
@@ -28,7 +32,7 @@ def respond():
     # Return the response in json format
     return jsonify(response)
 
-@app.route('/post/', methods=['POST'])
+@main.route('/post/', methods=['POST'])
 def post_something():
     param = request.form.get('name')
     print(param)
@@ -45,13 +49,10 @@ def post_something():
         })
 
 # A welcome message to test our server
-@app.route('/')
+@main.route('/')
 def index():
     return "<h1>Welcome to our server !!</h1>"
 
-@app.route('/time')
+@main.route('/time')
 def get_current_time():
     return {'time': time.time()}
-
-if __name__ == '__main__':
-	app.run()
