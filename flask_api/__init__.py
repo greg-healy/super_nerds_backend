@@ -24,6 +24,7 @@ def create_app(config_file='settings.py'):
 
 	# Running `flask create_tables` will create the tables for us
 	# Must be run again if more tables are created/changed
+	# On Heroku must also run `flask create_tables` in console
 	app.cli.add_command(create_tables)
 
 	return app

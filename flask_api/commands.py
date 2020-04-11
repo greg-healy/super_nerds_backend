@@ -1,6 +1,6 @@
 # This file is used to create the tables in the database
 
-import click # Used
+import click
 from flask.cli import with_appcontext
 
 from .extensions import db
