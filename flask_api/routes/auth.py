@@ -4,10 +4,12 @@ from flask_api.models import Users
 
 auth = Blueprint('auth', __name__)
 
+
 @auth.route('/register')
 def register():
-	pass
+    return "<h1>Register is working!</h1>"
+
 
 @auth.route('/login')
 def login():
-	pass
+    return "<h1>Login is working!</h1>"
