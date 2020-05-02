@@ -9,6 +9,7 @@ from flask_api.models import Users, Banks, Transactions
 main = Blueprint('main', __name__)
 CORS(main)
 
+
 @main.route('/getmsg/', methods=['GET'])
 def respond():
     # Retrieve the name from url parameter
@@ -32,16 +33,20 @@ def respond():
     # Return the response in json format
     return jsonify(response)
 
+
 @main.route('/post/', methods=['POST'])
 def post_something():
-    param = request.form.get('name')
-    print(param)
-    # You can add the test cases you made in the previous function, but in our case here you are just testing the POST functionality
-    if param:
+    name = request.json.get('name', None)
+    print(name)
+
+    # You can add the test cases you made in the previous function,
+    # but in our case here you are just testing the POST functionality
+
+    if name:
         return jsonify({
             "Message": f"Welcome {name} to our awesome platform!!",
             # Add this option to distinct the POST request
-            "METHOD" : "POST"
+            "METHOD": "POST"
         })
     else:
         return jsonify({
@@ -52,6 +57,7 @@ def post_something():
 @main.route('/')
 def index():
     return "<h1>Welcome to our server !!</h1>"
+
 
 @main.route('/time')
 def get_current_time():
