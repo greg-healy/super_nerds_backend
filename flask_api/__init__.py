@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 # Database functionality
 from .extensions import db
@@ -11,6 +12,7 @@ from .routes.auth import auth
 
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
+    CORS(app)
 
     # Takes environment variables from the .env file and assigns them
     # to values for use by the app
