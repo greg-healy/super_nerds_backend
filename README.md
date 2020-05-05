@@ -8,3 +8,13 @@ If you install any additional dependencies, be sure to push your update Pipfile 
 To run the app, enter the virtual environment with `pipenv shell`. To leave the shell type `exit`.
 
 Type `flask run`. It should begin running on localhost:5000. 
+
+# File Explanations
+
+`.flaskenv` 
+
+Sets what context flask is running in. If `FLASK_ENV` set to development, debug mode will be on. `FLASK_APP` is used to specify how to load the app. 
+
+`.env`
+
+Sets the database URI and the SECRET_KEY
