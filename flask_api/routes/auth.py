@@ -2,15 +2,13 @@ from flask import Blueprint, Flask, jsonify, request
 from flask_api.extensions import db
 from flask_api.models import Users
 from flask_jwt_extended import (
-    JWTManager, jwt_required, create_access_token,
+    jwt_required, create_access_token,
     get_jwt_identity
 )
 
 auth = Blueprint('auth', __name__)
 
-# Setup the Flask-JWT-Extended extension 
-app.config['JWT_SECRET_KEY'] = 'super-nerds-secret'  # Change this!
-jwt = JWTManager(app)
+
 
 @auth.route('/register', methods=["GET", "POST"])
 def register():

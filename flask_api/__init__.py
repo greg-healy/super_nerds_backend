@@ -8,9 +8,12 @@ from .commands import create_tables
 from .routes.main import main
 from .routes.auth import auth
 
-
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
+
+    # Setup the Flask-JWT-Extended extension 
+    app.config['JWT_SECRET_KEY'] = 'super-nerds-secret'  # Change this!
+    jwt = JWTManager(app)
 
     # Takes environment variables from the .env file and assigns them
     # to values for use by the app
