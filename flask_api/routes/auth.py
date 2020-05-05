@@ -47,7 +47,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         #return jsonify(email, password, first_name, last_name)
-        return jsonify(email: email, first_name: first_name, last_name: last_name, password: password), 400
+        return jsonify({email: email, first_name: first_name, last_name: last_name, password: password}), 400
          
  
 
