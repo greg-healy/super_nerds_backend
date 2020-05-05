@@ -1,5 +1,9 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_jwt_extended import (
+    jwt_required, JWTManager, create_access_token,
+    get_jwt_identity
+)
 
 # Database functionality
 from .extensions import db

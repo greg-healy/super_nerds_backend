@@ -2,7 +2,7 @@ from flask import Blueprint, Flask, jsonify, request
 from flask_api.extensions import db
 from flask_api.models import Users
 from flask_jwt_extended import (
-    jwt_required, create_access_token,
+    jwt_required, JWTManager, create_access_token,
     get_jwt_identity
 )
 
