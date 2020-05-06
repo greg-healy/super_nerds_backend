@@ -45,7 +45,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         #return jsonify(email, password, first_name, last_name)
-        return jsonify({email: email, first_name: first_name, last_name: last_name, password: password}), 400
+        return jsonify(first_name=first_name, last_name=last_name, email=email, password=password), 200
          
  
 
@@ -70,7 +70,7 @@ def login():
             #print("Logged in")
             #return jsonify('Valid login')
             access_token = create_access_token(identity=user.email)
-            return jsonify({access_token: access_token, status: "success", error_msg: "" })
+            return jsonify({"access_token": access_token, "status": "success", "error_msg": ""})
         else:
             # print("Password incorrect")            
             # return jsonify('Invalid Password')
