@@ -13,11 +13,12 @@ from .commands import create_tables
 from .routes.main import main
 from .routes.auth import auth
 
+
 def create_app(config_file='settings.py'):
     app = Flask(__name__)
     CORS(app)
 
-    # Setup the Flask-JWT-Extended extension 
+    # Setup the Flask-JWT-Extended extension
     app.config['JWT_SECRET_KEY'] = 'super-nerds-secret'  # Change this!
     jwt = JWTManager(app)
 

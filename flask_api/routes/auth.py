@@ -11,28 +11,24 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/register', methods=["GET", "POST"])
 def register():
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
+    # if not request.is_json:
+        # return jsonify({"msg": "Missing JSON in request", "status": "FAILURE"}), 409
 
     email = request.json.get('email', None)
-    if not email:
-        return jsonify({"msg": "Missing email"}), 400
-    # print(email)
+    # if not email:
+        # return jsonify({"msg": "Missing email"}), 400
 
     password = request.json.get('password', None)
-    if not password:
-        return jsonify({"msg": "Missing password"}), 400
-    # print(password)
+    # if not password:
+        # return jsonify({"msg": "Missing password"}), 400
 
     first_name = request.json.get('first_name', None)
-    if not first_name:
-        return jsonify({"msg": "Missing first name"}), 400
-    # print(first_name)
+    # if not first_name:
+        # return jsonify({"msg": "Missing first name"}), 400
 
     last_name = request.json.get('last_name', None)
-    if not last_name:
-        return jsonify({"msg": "Missing last name"}), 400
-    # print(last_name)
+    # if not last_name:
+        # return jsonify({"msg": "Missing last name"}), 400
 
     user = Users(first_name=first_name,
                  last_name=last_name,
@@ -41,16 +37,18 @@ def register():
 
     if Users.query.filter_by(email=email).first():
         # print('User already in the database')
-        return jsonify({"msg": "User already in DB"}), 400
+        return jsonify({"msg": "User already in DB"}), 409
     else:
         # print(f"Adding  {user.first_name} to the DB!")
         db.session.add(user)
         db.session.commit()
         # return jsonify(email, password, first_name, last_name)
-        return jsonify(first_name=first_name,
-                       last_name=last_name,
-                       email=email,
-                       password=password), 200
+        # return jsonify(first_name=first_name,
+                       # last_name=last_name,
+                       # email=email,
+                       # password=password), 200
+
+        return jsonify({"msg": "Registration Success!"}), 201
 
 
 @auth.route('/login', methods=['GET', 'POST'])
