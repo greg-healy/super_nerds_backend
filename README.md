@@ -15,6 +15,8 @@ Type `flask run`. It should begin running on localhost:5000.
 3. Make sure the environment variables (`DATABASE_URL` and `SECRET_KEY`) are still set properly on the Settings tab of the dashboard.
 4. Open the Heroku CLI (click the 'More' button in the top right) and run  the `flask create_tables` command.
 
+NOTE: We'll need to follow these steps every time we make a material change to the database (changes to `models.py`) in order for those changes to take effect, and so we don't get any errors. These situations should be obvious because we'll have to do the same deleting and creation of our database locally as well. A potential work around for the future might be to have instructions to destroy any old tables when instantiating new ones...
+
 
 
 ## File Explanations
