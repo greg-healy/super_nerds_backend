@@ -1,22 +1,20 @@
-# autho.py will acquire data from the forms provide on the
+# auth.py will acquire data from the forms provide on the
 # /register and /login routes and appropriate action
 # base on data in the database
 
-from flask import Blueprint, Flask, jsonify, request
+from flask import Blueprint, jsonify, request
 from flask_api.extensions import db
 from flask_api.models import Users
-from flask_jwt_extended import (
-    jwt_required, JWTManager, create_access_token,
-    get_jwt_identity
-)
+from flask_jwt_extended import create_access_token
 
 auth = Blueprint('auth', __name__)
 
 # register() will set variables email, password, first_name,
-# last_name with values entered into the form. These individual 
+# last_name with values entered into the form. These individual
 # values are components of the User object and table. If the user
 # does not exists in the database, they are added, otherwise an
-# error notification is sent back. 
+# error notification is sent back.
+
 
 @auth.route('/register', methods=["GET", "POST"])
 def register():
@@ -42,12 +40,13 @@ def register():
 
         return jsonify({"msg": "Registration Success!"}), 201
 
-# The login() function will acquire form data and place it into 
+# The login() function will acquire form data and place it into
 # the fields email and password. If the user has a registered account
 # and the password is correct, an access token is created and sent
-# back. The token will be used for user identification and page 
+# back. The token will be used for user identification and page
 # navigation. The logic will otherwise return appropriate messages
-# if bad data is provided. 
+# if bad data is provided.
+
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -60,7 +59,7 @@ def login():
     password = request.json.get('password', None)
     if not password:
         return jsonify({"msg": "Missing password"}), 400
- 
+
     user = Users.query.filter_by(email=email).first()
 
     if user:

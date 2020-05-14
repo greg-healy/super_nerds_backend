@@ -1,9 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_jwt_extended import (
-    jwt_required, JWTManager, create_access_token,
-    get_jwt_identity
-)
+from flask_jwt_extended import JWTManager
 
 # Database functionality
 from .extensions import db
@@ -12,6 +9,8 @@ from .commands import create_tables
 # Blueprints/routes
 from .routes.main import main
 from .routes.auth import auth
+from .routes.bank import bank_routes
+from .routes.user import user_routes
 
 
 def create_app(config_file='settings.py'):
@@ -35,6 +34,8 @@ def create_app(config_file='settings.py'):
 
     app.register_blueprint(main)
     app.register_blueprint(auth)
+    app.register_blueprint(bank_routes)
+    app.register_blueprint(user_routes)
 
     # Running `flask create_tables` will create the tables for us
     # Must be run again if more tables are created/changed
