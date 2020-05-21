@@ -14,6 +14,8 @@ def add_bank():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
+    print(request)
+
     account_number = request.json.get('bank_no', None)
 
     bank_name = request.json.get('bank_name', None)
@@ -57,8 +59,8 @@ def get_banks():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
+    print(request)
     email = get_jwt_identity()
-    print(email)
 
     user = Users.query.filter_by(email=email).first()
 

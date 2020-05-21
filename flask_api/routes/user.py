@@ -1,17 +1,19 @@
 from flask import Blueprint, jsonify, request
 from flask_api.models import Users
-# Remember to import JWT stuff for tokens and authentication
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 user_routes = Blueprint('user_routes', __name__)
 
 
 @user_routes.route('/users', methods=['GET'])
+@jwt_required
 def user_search():
-    # if not request.is_json:
-    #     return jsonify({"msg": "Missing JSON in request"}), 400
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
 
-    # email = request.json.get('email', None)
+    print(request)
+
     users = Users.query.all()
 
     user_list = []
@@ -29,9 +31,10 @@ def user_search():
 
 
 @user_routes.route('/user/balance', methods=['GET'])
+@jwt_required
 def user_balance():
 
-    email = request.json.get('email', None)
+    email = get_jwt_identity()
 
     user = Users.query.filter_by(email=email).first()
 
