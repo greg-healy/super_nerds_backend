@@ -85,31 +85,6 @@ def get_banks():
 @jwt_required
 def deposit():
 
-    bank_no = request.json.get('bank_no', None)
-    amount = request.json.get('amount', None)
-    email = get_jwt_identity()
-
-    user = Users.query.filter_by(email=email).first()
-
-    if user is None:
-        return jsonify({"msg": "User doesn't exit"}), 400
-
-    user_bank = user.banks
-
-    if bank_no != user_bank.account_number:
-        return jsonify({"msg": "Bank account not on file"}), 400
-
-    else:
-        user.account_balance += amount
-        db.session.commit()
-        print(user.account_balance)
-        return jsonify({"msg": "Deposit Successful"}), 200
-
-
-@bank_routes.route('/bank/withdraw', methods=["POST"])
-@jwt_required
-def withdraw():
-
     print(request)
     bank_no = request.json.get('bank_no', None)
     amount = request.json.get('amount', None)
@@ -138,3 +113,28 @@ def withdraw():
         else:
             return jsonify({"msg": "Can't withdraw more than your\
                                     account balance"}), 406
+
+
+@bank_routes.route('/bank/withdraw', methods=["POST"])
+@jwt_required
+def withdraw():
+
+    bank_no = request.json.get('bank_no', None)
+    amount = request.json.get('amount', None)
+    email = get_jwt_identity()
+
+    user = Users.query.filter_by(email=email).first()
+
+    if user is None:
+        return jsonify({"msg": "User doesn't exit"}), 400
+
+    user_bank = user.banks
+
+    if bank_no != user_bank.account_number:
+        return jsonify({"msg": "Bank account not on file"}), 400
+
+    else:
+        user.account_balance += amount
+        db.session.commit()
+        print(user.account_balance)
+        return jsonify({"msg": "Deposit Successful"}), 200
