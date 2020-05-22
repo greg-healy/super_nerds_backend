@@ -9,10 +9,8 @@ user_routes = Blueprint('user_routes', __name__)
 @user_routes.route('/users', methods=['GET'])
 @jwt_required
 def user_search():
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-
-    print(request)
+    # if not request.is_json:
+        # return jsonify({"msg": "Missing JSON in request"}), 400
 
     users = Users.query.all()
 

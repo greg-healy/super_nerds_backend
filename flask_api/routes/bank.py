@@ -11,9 +11,6 @@ bank_routes = Blueprint('bank_routes', __name__)
 @jwt_required
 def add_bank():
 
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-
     print(request)
 
     account_number = request.json.get('bank_no', None)
@@ -27,13 +24,15 @@ def add_bank():
 
     # If user doesn't exist
     if user is None:
-        return jsonify({"msg": "User doesn't exit"}), 400
+        print("User doesn't exist'")
+        return jsonify({"msg": "User doesn't exist"}), 400
 
     potential_bank = (Banks.query.filter_by(account_number=account_number)
                       .first())
 
     # If bank account is currently in use
     if potential_bank is not None:
+        print("Bank in use")
         return jsonify({"msg": "Bank in use"}), 409
 
     # if user does not have a bank account, add to Banks table
@@ -49,6 +48,7 @@ def add_bank():
 
     # if the user already has a bank account, send back error
     else:
+        print('User already has a bank')
         return jsonify({"msg": "User already has a bank"}), 409
 
 
@@ -56,38 +56,34 @@ def add_bank():
 @jwt_required
 def get_banks():
 
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-
-    print(request)
     email = get_jwt_identity()
 
     user = Users.query.filter_by(email=email).first()
 
     if user is None:
+        print('User doesnt exist')
         return jsonify({"msg": "User doesn't exit"}), 400
 
     user_bank = user.banks
+    print(user_bank)
     if user.banks:
         bank_number = user_bank.account_number
-        print(bank_number)
+        print('Bank act num: ' + str(bank_number))
 
         bank_name = user_bank.bank_name
-        print(bank_name)
+        print('Bank name: ' + str(bank_name))
 
         return jsonify({"banks": [{"bank_name": bank_name,
                                    "bank_no": bank_number}]}), 200
 
     else:
-        return jsonify({"msg": "User doesn't have a bank yet"}), 409
+        print('User doesnt have a bank yet')
+        return jsonify({"msg": "User doesn't have a bank yet"}), 204
 
 
 @bank_routes.route('/bank/deposit', methods=["POST"])
 @jwt_required
 def deposit():
-
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
 
     bank_no = request.json.get('bank_no', None)
     amount = request.json.get('amount', None)
@@ -114,9 +110,7 @@ def deposit():
 @jwt_required
 def withdraw():
 
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-
+    print(request)
     bank_no = request.json.get('bank_no', None)
     amount = request.json.get('amount', None)
     email = get_jwt_identity()
@@ -124,11 +118,14 @@ def withdraw():
     user = Users.query.filter_by(email=email).first()
 
     if user is None:
+        print("User doesn't exist")
         return jsonify({"msg": "User doesn't exit"}), 400
 
     user_bank = user.banks
+    print(user_bank)
 
     if bank_no != user_bank.account_number:
+        print('That bank account is not on file')
         return jsonify({"msg": "Bank account not on file"}), 400
 
     else:
@@ -140,4 +137,4 @@ def withdraw():
 
         else:
             return jsonify({"msg": "Can't withdraw more than your\
-                                    account balance"}), 400
+                                    account balance"}), 406
