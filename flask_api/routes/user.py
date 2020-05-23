@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 from flask_api.models import Users
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
@@ -9,19 +9,20 @@ user_routes = Blueprint('user_routes', __name__)
 @user_routes.route('/users', methods=['GET'])
 @jwt_required
 def user_search():
-    # if not request.is_json:
-        # return jsonify({"msg": "Missing JSON in request"}), 400
 
     users = Users.query.all()
+
+    current_user = get_jwt_identity()
 
     user_list = []
 
     for i in users:
-        list_item = {"first_name": i.first_name,
-                     "last_name": i.last_name,
-                     "email": i.email}
+        if i.email != current_user:
+            list_item = {"first_name": i.first_name,
+                         "last_name": i.last_name,
+                         "email": i.email}
 
-        user_list.append(list_item)
+            user_list.append(list_item)
 
     print(user_list)
 
