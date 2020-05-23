@@ -36,7 +36,8 @@ def register():
     potential_user = Users(first_name=first_name,
                            last_name=last_name,
                            email=email,
-                           password=password)
+                           password=password,
+                           account_balance=0.0)
 
     user_in_db = Users.query.filter_by(email=email).first()
 
@@ -80,6 +81,7 @@ def login():
     if user:
         if user.password == password:
             access_token = create_access_token(identity=user.email)
+            print(access_token)
             return jsonify({"access_token": access_token,
                             "status": "success",
                             "error_msg": ""})

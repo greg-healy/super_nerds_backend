@@ -19,6 +19,8 @@ def create_app(config_file='settings.py'):
 
     # Setup the Flask-JWT-Extended extension
     app.config['JWT_SECRET_KEY'] = 'super-nerds-secret'  # Change this!
+    app.config['JWT_HEADER_NAME'] = 'Authorization'
+    app.config['JWT_HEADER_TYPE'] = ''
     jwt = JWTManager(app)
 
     # Takes environment variables from the .env file and assigns them
