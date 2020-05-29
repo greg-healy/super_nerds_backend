@@ -18,6 +18,9 @@ def add_bank():
     bank_name = request.json.get('bank_name', None)
 
     email = get_jwt_identity()
+    
+    # for debugging
+    # email = request.json.get('email', None)
     print(email)
 
     user = Users.query.filter_by(email=email).first()
@@ -131,6 +134,8 @@ def withdraw():
     user_bank = user.banks
 
     if bank_no != user_bank.account_number:
+        print(user_bank.account_number)
+        print(bank_no)
         return jsonify({"msg": "Bank account not on file"}), 400
 
     else:

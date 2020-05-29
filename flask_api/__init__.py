@@ -11,6 +11,9 @@ from .routes.main import main
 from .routes.auth import auth
 from .routes.bank import bank_routes
 from .routes.user import user_routes
+from .routes.requests import requests
+from .routes.transactions import transactions
+from .routes.debugging import debugging
 
 
 def create_app(config_file='settings.py'):
@@ -38,6 +41,9 @@ def create_app(config_file='settings.py'):
     app.register_blueprint(auth)
     app.register_blueprint(bank_routes)
     app.register_blueprint(user_routes)
+    app.register_blueprint(requests)
+    app.register_blueprint(transactions)
+    app.register_blueprint(debugging)
 
     # Running `flask create_tables` will create the tables for us
     # Must be run again if more tables are created/changed
