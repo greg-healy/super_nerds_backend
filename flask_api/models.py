@@ -56,4 +56,4 @@ class UsersReqs(db.Model):
     user_reqs_id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), db.ForeignKey('users.email'))
     req_id = db.Column('req_id', db.Integer, db.ForeignKey('requests.req_id')) 
-    requestor = db.Column('requestor', db.Boolean)
+    requestor = db.Column(db.Boolean)

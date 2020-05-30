@@ -21,7 +21,6 @@ def activity():
         transactions = Transactions.query.filter_by(transaction_id=i.transaction_id).all()
 
         for j in transactions:
-            print(j.transaction_id)
             other_user_rows = UsersTransactions.query.filter(UsersTransactions.transaction_id==j.transaction_id).filter(UsersTransactions.email!=i.email).all()
 
             for x in other_user_rows:
@@ -35,8 +34,8 @@ def activity():
                             "amount": j.amount_transfered,
                             "date": date}
 
-                print(list_item)
+                #print(list_item)
+                transaction_list.append(list_item)              
+                
 
-        transactions = Transactions.query.filter_by()
-
-    return jsonify({"msg": "Success"}), 200
+    return jsonify(transaction_list), 200
