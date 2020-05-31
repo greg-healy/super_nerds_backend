@@ -3,6 +3,7 @@ from flask_api.models import (Users, Transactions, UsersTransactions,
                               Requests, UsersReqs)
 from flask_api.extensions import db
 from datetime import datetime
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 requests = Blueprint('requests', __name__)
 
@@ -55,10 +56,10 @@ def send_money(user_logged_in, recipient, amount):
 
 
 @requests.route('/send', methods=['POST', 'GET'])
+@jwt_required
 def send():
     # For testing purposes, user will be the email in the request:
-    user = request.json.get('requestor', None)
-    print(user)
+    user = get_jwt_identity()
 
     # user = get_jwt_identity()
 
@@ -71,10 +72,11 @@ def send():
 
 
 @requests.route('/request/all', methods=['GET'])
+@jwt_required
 def request_all():
 
     # email = get_jwt_identity()
-    user_logged_in = request.json.get('requestor', None)
+    user_logged_in = get_jwt_identity()
     user = Users.query.filter_by(email=user_logged_in).first()
     print(user_logged_in)
 
@@ -143,10 +145,11 @@ def request_all():
 
 
 @requests.route('/request/new', methods=['POST'])
+@jwt_required
 def request_new():
 
     # Using until we add JWT
-    user_logged_in = request.json.get('user', None)
+    user_logged_in = get_jwt_identity()
     print(user_logged_in)
 
     requestee = request.json.get('email', None)
@@ -183,8 +186,9 @@ def request_new():
 
 
 @requests.route('/respond', methods=['POST'])
+@jwt_required
 def respond():
-    user_logged_in = request.json.get('user', None)
+    user_logged_in = get_jwt_identity()
     # print(user_logged_in)
 
     req_id = request.json.get('req_id', None)

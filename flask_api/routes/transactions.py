@@ -1,12 +1,13 @@
 from flask import Blueprint, jsonify, request
 from flask_api.models import Users, Transactions, UsersTransactions
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 transactions = Blueprint('transactions', __name__)
 
-
 @transactions.route('/activity', methods=['GET'])
+@jwt_required
 def activity():
-    user_logged_in = request.json.get('email', None)
+    user_logged_in = get_jwt_identity()
 
     user = Users.query.filter_by(email=user_logged_in).first()
 

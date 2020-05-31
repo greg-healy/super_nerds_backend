@@ -11,8 +11,6 @@ bank_routes = Blueprint('bank_routes', __name__)
 @jwt_required
 def add_bank():
 
-    print(request)
-
     account_number = request.json.get('bank_no', None)
 
     bank_name = request.json.get('bank_name', None)
