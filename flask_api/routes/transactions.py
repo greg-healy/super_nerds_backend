@@ -17,6 +17,7 @@ def activity():
     user_transactions = (UsersTransactions.query.
                          filter_by(email=user.email).all())
 
+
     transaction_list = []
 
     for i in user_transactions:
@@ -45,4 +46,6 @@ def activity():
 
                 transaction_list.append(list_item)
 
-    return jsonify(transaction_list), 200
+    activity = {"activity": transaction_list}
+
+    return jsonify(activity), 200
