@@ -22,7 +22,7 @@ def send_money(user_logged_in, recipient, amount):
 
     # Subtract the money from the user's account_balance
     print("User's starting balance " + str(user.account_balance))
-    print("Recipient's starting balance " + str(user.account_balance))
+    print("Recipient's starting balance " + str(recipient.account_balance))
 
     user.account_balance -= amount
     recipient.account_balance += amount
@@ -194,22 +194,25 @@ def respond():
     req_id = request.json.get('req_id', None)
     # print(req_id)
     response = request.json.get('response', None)
-    # print(response)
 
     # If the response is true -> complete the request
     if response:
+        print("User approves request")
 
         # Send money
         req = Requests.query.filter_by(req_id=req_id).first()
         print(req.amount_req)
 
-        usersReq = (UsersReqs.query.
+        loggedInReq = (UsersReqs.query.
                     filter(UsersReqs.req_id == req_id).
                     filter(UsersReqs.requestor == False).first())
 
-        loggedInReq = (UsersReqs.query.
+        usersReq = (UsersReqs.query.
                        filter(UsersReqs.req_id == req_id).
                        filter(UsersReqs.requestor == True).first())
+
+        print("Email of other person: " + str(usersReq.email))
+        print("Email of person logged in: " + str(loggedInReq.email))
 
         send_money(user_logged_in, usersReq.email, req.amount_req)
 
