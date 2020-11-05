@@ -1,4 +1,7 @@
-# Instructions for CS361
+# Link to current deployment
+https://cs361-project.herokuapp.com/
+
+# Instructions
 Clone the repo
 
 Create the virtual environment and install dependencies by running `pipenv install`. Note that if you don't have `pipenv` installed you may need to run `pip install pipenv`. Check out this article for more on pipenv: https://thoughtbot.com/blog/how-to-manage-your-python-projects-with-pipenv
